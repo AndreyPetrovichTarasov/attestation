@@ -1,0 +1,158 @@
+{% load static %}
+
+<style>
+    /* 🌆 Фон навбара (растягивается на всю ширину) */
+    .navbar-custom {
+        background: url("{% static 'images/restaurant-bg.jpg' %}") no-repeat center center;
+        background-size: cover;
+        position: relative;
+        z-index: 10;
+    }
+
+    /* 🖤 Затемнение фона */
+    .navbar-overlay {
+        background: rgba(0, 0, 0, 0.3); /* Чёрный с прозрачностью */
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+    }
+
+    /* 🔗 Стили для ссылок */
+    .nav-link-custom {
+        color: white;
+        text-decoration: none; /* Убираем подчеркивание */
+        transition: color 0.3s;
+        position: relative;
+        z-index: 20; /* Чтобы ссылки были выше фона */
+    }
+
+    .nav-link-custom:hover {
+        color: #f8b400; /* Золотистый при наведении */
+    }
+
+    /* 📱 Стиль кнопки навбара */
+    .navbar-toggler {
+        border: none;
+        padding: 5px 10px;
+        z-index: 20;
+    }
+
+    .navbar-toggler-icon {
+        filter: invert(1); /* Делаем иконку светлой */
+    }
+
+    /* ⚡ Стили для выпадающего меню */
+    .collapse .container {
+        position: relative;
+        z-index: 20;
+        padding: 20px;
+    }
+
+    .restaurant-name {
+    font-family: 'Great Vibes', cursive; /* Используем подключенный шрифт */
+    font-size: 50px; /* Делаем текст крупнее */
+    font-weight: bold; /* Делаем жирным */
+    color: #ffffff; /* Белый цвет */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Тень для объёма */
+    }
+
+    .restaurant-tagline {
+    font-size: 18px; /* Чуть меньше размер */
+    font-family: 'Arial', sans-serif; /* Обычный шрифт для подзаголовка */
+    color: #ffffff; /* Светло-серый */
+    display: block;
+    text-align: center; /* Центрируем подзаголовок относительно названия */
+    }
+</style>
+
+<!-- 🛠️ Затемнённый фон -->
+<div class="navbar-custom">
+    <div class="navbar-overlay"></div>
+
+    <!-- Выпадающее меню -->
+    <div class="collapse" id="navbarHeader">
+        <div class="container py-4">
+            <div class="row">
+                <!-- Логотип -->
+                <div class="col-md-4 text-start">
+                    <h4 class="restaurant-name">"Плакучая Ива"</h4>
+                    <p class="restaurant-tagline">Ресторан твоей мечты</p>
+                </div>
+
+                <!-- Меню -->
+                <div class="col-md-4">
+                    <h5 class="text-white">Меню</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'home' %}" class="nav-link-custom"><i class="bi bi-house-door"></i> Главная</a></li>
+                        <li><a href="{% url 'about' %}" class="nav-link-custom"><i class="bi bi-archive"></i> О ресторане</a></li>
+                        <li><a href="{% url 'services' %}" class="nav-link-custom"><i class="bi bi-card-checklist"></i> Услуги</a></li>
+                        <li><a href="{% url 'users:reviews' %}" class="nav-link-custom"><i class="bi bi-arrow-through-heart"></i> Отзывы посетителей</a></li>
+                        <li><a href="{% url 'home' %}#contacts"" class="nav-link-custom"><i class="bi bi-arrow-90deg-down"></i> Контакты</a></li>
+                        {% if perms.users.can_block_user %}
+                        <li><a href="#" class="nav-link-custom"><i class="bi bi-people"></i> Управление пользователями</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <!-- Авторизация -->
+                <div class="col-md-4">
+                    <h5 class="text-white">Личный кабинет</h5>
+                    <ul class="list-unstyled">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <div class="d-flex flex-column">
+                                <!-- Личный кабинет -->
+                                <a href="{% url 'users:profile' user.id %}"
+                                   class="nav-link-custom"><i class="bi bi-person"></i> Мой профиль ({{ user.first_name|default:user.username }})</a>
+                                <a href="{% url 'reservations:check_availability' %}" class="nav-link-custom"><i class="bi bi-bookmark-check"></i> Бронирование</a>
+                                <a href="{% url 'reservations:user_reservations' %}" class="nav-link-custom"><i class="bi bi-layout-text-window-reverse"></i> Мои бронирования</a>
+                                <a href="{% url 'reservations:archived_reservations' %}" class="nav-link-custom"><i class="bi bi-bookmarks"></i> История бронирований</a>
+                                <!-- Форма выхода -->
+                                <form method="post" action="{% url 'users:logout' %}" style="display:inline">
+                                    {% csrf_token %}
+                                    <a href="#" class="nav-link-custom"
+                                       onclick="this.closest('form').submit(); return false;"><i class="bi bi-eject"></i> Выйти</a>
+                                </form>
+                            </div>
+                        </li>
+                        {% else %}
+                        <li><a href="{% url 'users:login' %}" class="text-white text-decoration-none"><i class="bi bi-key"></i> Вход</a></li>
+                        <li><a href="{% url 'users:register' %}" class="text-white text-decoration-none"><i class="bi bi-feather"></i>
+                            Регистрация</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Навигационная панель -->
+    <nav class="navbar navbar-dark shadow-sm">
+        <div class="container d-flex align-items-center justify-content-between">
+
+            <!-- Слева: название ресторана -->
+            <a href="{% url 'home' %}" class="navbar-brand nav-link-custom"><i class="bi bi-bank2"></i> "Плакучая Ива"</a>
+
+            <!-- Центр: ссылки "Бронировать" и "Мои бронирования" -->
+            <div class="d-flex gap-4">
+                {% if user.is_authenticated %}
+                <a href="{% url 'users:profile' user.id %}" class="nav-link-custom">{{ user.first_name|default:user.username }}</a>
+                {% endif %}
+                <a href="{% url 'reservations:check_availability' %}" class="nav-link-custom"><i class="bi bi-bookmark-check"></i> Бронировать</a>
+                <a href="{% url 'reservations:user_reservations' %}" class="nav-link-custom"><i class="bi bi-layout-text-window-reverse"></i> Мои бронирования</a>
+            </div>
+
+            <!-- Справа: кнопка меню -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"
+                    aria-controls="navbarHeader" aria-expanded="false" aria-label="Переключить навигацию">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+</div>
+
+<!-- Подключаем Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">

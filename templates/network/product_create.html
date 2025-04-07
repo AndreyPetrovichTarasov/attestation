@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Добавить продукт{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Добавить продукт для узла "{{ node.name }}"</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                {{ form.errors }}
+            </div>
+        {% endif %}
+        <div class="mb-3">
+            {{ form.name.label_tag }} {{ form.name }}
+        </div>
+        <div class="mb-3">
+            {{ form.model.label_tag }} {{ form.model }}
+        </div>
+        <div class="mb-3">
+            {{ form.release_date.label_tag }} {{ form.release_date }}
+        </div>
+        <button type="submit" class="btn btn-success">Сохранить</button>
+        <a href="{% url 'network:detail' node.pk %}" class="btn btn-secondary">Назад</a>
+    </form>
+</div>
+{% endblock %}

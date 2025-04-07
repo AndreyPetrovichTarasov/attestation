@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}{{ node.name }}{% endblock %}
+{% block content %}
+<h2>{{ node.name }}</h2>
+<ul class="list-group">
+    <li class="list-group-item">Email: {{ node.email }}</li>
+    <li class="list-group-item">Адрес: {{ node.country }}, {{ node.city }}, {{ node.street }}, {{ node.house_number }}</li>
+    <li class="list-group-item">Поставщик:
+        {% if node.supplier %}
+            <a href="{% url 'network:detail' node.supplier.pk %}">{{ node.supplier.name }}</a>
+        {% else %}
+            —
+        {% endif %}
+    </li>
+    <li class="list-group-item">Долг: {{ node.debt }}</li>
+    <li class="list-group-item">Создан: {{ node.created_at }}</li>
+</ul>
+
+<h4 class="mt-4">Продукты:</h4>
+<ul class="list-group">
+    {% for product in node.products.all %}
+        <li class="list-group-item">
+            {{ product.name }} ({{ product.model }}) — {{ product.release_date }}
+        </li>
+    {% empty %}
+        <li class="list-group-item">Нет продуктов.</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'network:product_create' node.pk %}" class="btn btn-primary">Добавить продукт</a>
+
+{% endblock %}

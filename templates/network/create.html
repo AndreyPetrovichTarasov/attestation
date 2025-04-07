@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Создать узел{% endblock %}
+{% block content %}
+<h2>Создать узел сети</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-success">Создать</button>
+</form>
+{% endblock %}

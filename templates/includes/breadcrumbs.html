@@ -1,0 +1,30 @@
+{% load custom_filters %}
+
+{% if request.path %}
+    {% with request.path|slice:"1:"|split:"/" as parts %}
+        <nav aria-label="breadcrumb" class="container mt-3">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home' %}">Главная</a>
+                </li>
+
+                {% with "" as current_path %}
+                    {% for part in parts %}
+                        {% if part != "users" %}  {# Исключаем "users" из отображения #}
+                            {% with current_path|add:"/"|add:part as new_path %}
+                                {% if forloop.last %}
+                                    <li class="breadcrumb-item active" aria-current="page">{{ part }}</li>
+                                {% else %}
+                                    <li class="breadcrumb-item">
+                                        <a href="/users{{ new_path }}">{{ part }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endwith %}
+                            {% with new_path as current_path %}{% endwith %}
+                        {% endif %}
+                    {% endfor %}
+                {% endwith %}
+            </ol>
+        </nav>
+    {% endwith %}
+{% endif %}
