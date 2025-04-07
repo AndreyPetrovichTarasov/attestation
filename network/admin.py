@@ -10,11 +10,11 @@ def clear_debt(modeladmin, request, queryset):
 
 @admin.register(NetworkNode)
 class NetworkNodeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'city', 'country', 'supplier_link', 'debt')
-    list_filter = ('city',)
+    list_display = ("name", "city", "country", "supplier_link", "debt")
+    list_filter = ("city",)
     actions = [clear_debt]
-    search_fields = ('name',)
-    readonly_fields = ('created_at',)  # Поля только для чтения
+    search_fields = ("name",)
+    readonly_fields = ("created_at",)  # Поля только для чтения
 
     # Отображение ссылки на поставщика в списке
     def supplier_link(self, obj):
@@ -22,7 +22,7 @@ class NetworkNodeAdmin(admin.ModelAdmin):
             return format_html(
                 '<a href="/admin/network/networknode/{}/change/">{}</a>',
                 obj.supplier.id,
-                obj.supplier.name
+                obj.supplier.name,
             )
         return "-"
 
@@ -34,7 +34,7 @@ class NetworkNodeAdmin(admin.ModelAdmin):
             return format_html(
                 '<a href="/admin/network/networknode/{}/change/">{}</a>',
                 obj.supplier.id,
-                obj.supplier.name
+                obj.supplier.name,
             )
         return "-"
 
@@ -48,9 +48,10 @@ class NetworkNodeAdmin(admin.ModelAdmin):
         # Если объект существует (мы на странице редактирования), добавляем ссылку на поставщика
         if obj:
             supplier_fieldset = (
-                'Поставщик', {
-                    'fields': ('supplier_link_detail',),
-                }
+                "Поставщик",
+                {
+                    "fields": ("supplier_link_detail",),
+                },
             )
             fieldsets = list(fieldsets)
             fieldsets.append(supplier_fieldset)
@@ -61,11 +62,10 @@ class NetworkNodeAdmin(admin.ModelAdmin):
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = super().get_readonly_fields(request, obj)
         if obj:
-            readonly_fields += ('supplier_link_detail',)
+            readonly_fields += ("supplier_link_detail",)
         return readonly_fields
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'model', 'release_date', 'node')
-
+    list_display = ("name", "model", "release_date", "node")

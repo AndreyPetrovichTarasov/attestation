@@ -10,7 +10,9 @@ class NetworkNode(models.Model):
     street = models.CharField(max_length=100)
     house_number = models.CharField(max_length=20)
 
-    supplier = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL, related_name='clients')
+    supplier = models.ForeignKey(
+        "self", null=True, blank=True, on_delete=models.SET_NULL, related_name="clients"
+    )
     debt = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -28,10 +30,12 @@ class NetworkNode(models.Model):
 
 
 class Product(models.Model):
-    node = models.ForeignKey(NetworkNode, related_name='products', on_delete=models.CASCADE)
+    node = models.ForeignKey(
+        NetworkNode, related_name="products", on_delete=models.CASCADE
+    )
     name = models.CharField(max_length=100)
     model = models.CharField(max_length=100)
     release_date = models.DateField()
 
     def __str__(self):
-        return f'{self.name} ({self.model})'
+        return f"{self.name} ({self.model})"

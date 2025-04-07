@@ -5,7 +5,7 @@ from .models import NetworkNode, Product
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = '__all__'
+        fields = "__all__"
 
 
 class NetworkNodeSerializer(serializers.ModelSerializer):
@@ -13,5 +13,5 @@ class NetworkNodeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = NetworkNode
-        exclude = ['debt']  # запрет на обновление долга
-        read_only_fields = ['created_at']
+        exclude = ["debt"]  # запрет на обновление долга
+        read_only_fields = ["created_at"]

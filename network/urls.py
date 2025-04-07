@@ -8,14 +8,20 @@ from . import views
 app_name = "network"
 
 router = DefaultRouter()
-router.register(r'api/nodes', NetworkNodeViewSet, basename='api-nodes')  # добавим префикс для API
+router.register(
+    r"api/nodes", NetworkNodeViewSet, basename="api-nodes"
+)  # добавим префикс для API
 
 urlpatterns = [
     # HTML-вьюхи
-    path('', views.NetworkNodeListView.as_view(), name='list'),
-    path('<int:pk>/', views.NetworkNodeDetailView.as_view(), name='detail'),
-    path('create/', views.NetworkNodeCreateView.as_view(), name='create'),
-    path('<int:pk>/add-product/', views.ProductCreateView.as_view(), name='product_create'),
+    path("", views.NetworkNodeListView.as_view(), name="list"),
+    path("<int:pk>/", views.NetworkNodeDetailView.as_view(), name="detail"),
+    path("create/", views.NetworkNodeCreateView.as_view(), name="create"),
+    path(
+        "<int:pk>/add-product/",
+        views.ProductCreateView.as_view(),
+        name="product_create",
+    ),
 ]
 
 # добавляем DRF-маршруты
