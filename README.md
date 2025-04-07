@@ -43,14 +43,14 @@
 
 ## Структура проекта
 
-network/              # Основное Django-приложение
-├── models.py         # Модели NetworkNode и Product
-├── views.py          # Web и DRF представления
-├── serializers.py    # DRF-сериализаторы
-├── forms.py          # Форма создания продуктов
-├── urls.py           # URL-роутинг
-├── templates/        # Bootstrap-шаблоны
-├── admin.py          # Админка с кастомными действиями
+- network/              # Основное Django-приложение
+- ├── models.py         # Модели NetworkNode и Product
+- ├── views.py          # Web и DRF представления
+- ├── serializers.py    # DRF-сериализаторы
+- ├── forms.py          # Форма создания продуктов
+- ├── urls.py           # URL-роутинг
+- ├── templates/        # Bootstrap-шаблоны
+- ├── admin.py          # Админка с кастомными действиями
 
 ## 🛠 Админ-панель
 
