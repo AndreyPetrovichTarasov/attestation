@@ -133,7 +133,12 @@ bash: python manage.py createsuperuser
 
 Назначьте ему is_staff=True, is_active=True — тогда он сможет работать с API
 
+## 🐳 Запуск с помощью Docker  
+! Для запуска с помощью Докера, измените занчение в env-файле переменной HOST с 'localhost' на 'db'
 
+1. **Запускаем контейнеры**  
+
+docker-compose up --build
 
 ## Лицензия
 
