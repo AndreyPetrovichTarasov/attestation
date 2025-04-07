@@ -31,12 +31,12 @@
 
 ## 🔧 Установка и запуск
 
-git clone <https://github.com/AndreyPetrovichTarasov/attestation/tree/develop>
-cd <attestation>
-poetry install
-python manage.py migrate
-python manage.py createsuperuser
-python manage.py runserver
+- git clone <https://github.com/AndreyPetrovichTarasov/attestation/tree/develop>
+- cd <attestation>
+- poetry install
+- python manage.py migrate
+- python manage.py createsuperuser
+- python manage.py runserver
 
 ---
 
